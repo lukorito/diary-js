@@ -32,7 +32,7 @@
       "one-variable-per-declaration": [ false ],
       "ordered-imports": [ false ],
       "semicolon": [ true, "always" ],
-      "variable-name": [ true, "ban-keywords", "check-format", "allow-leading-underscore" ]
+      "variable-name": [ true, "ban-keywords" ]
   },
     "rulesDirectory": []
 }
