@@ -27,7 +27,7 @@ createConnection().then(async connection => {
               next,
             );
             if (results) {
-              return response.send(results);
+              return response;
             }
           } catch (error) {
             response.status(400).send(error);
