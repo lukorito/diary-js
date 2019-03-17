@@ -1,19 +1,35 @@
 import { NextFunction, Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 
 export const authenticatedRoutes = (
-  req: Request,
-  res: Response,
+  request: Request,
+  response: Response,
   next: NextFunction,
 ) => {
-  console.log('This endpoint is authenticated');
+  console.log(request.headers);
   next();
 };
 
 export const nonAuthentiatedRoutes = (
-  req: Request,
-  res: Response,
+  request: Request,
+  response: Response,
   next: NextFunction,
 ) => {
-  console.log('this is not authenticated');
-  next();
+  const authHeader = request.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    const { SECRET_KEY }: any = process.env;
+    try {
+      const decoded = jwt.verify(token, SECRET_KEY);
+      next();
+    } catch (error) {
+      response.status(401).send({
+        message: 'Token invalid or unavailable',
+      });
+    }
+  } else {
+    response.status(401).send({
+      message: 'Token invalid or unavailable',
+    });
+  }
 };

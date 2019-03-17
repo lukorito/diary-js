@@ -31,6 +31,7 @@ export class AuthController {
 
   async login(request: Request, response: Response, next: NextFunction) {
     const { user } = request.body;
+    const { SECRET_KEY }: any = process.env;
     try {
       //  check if the user exists
       const isUser = await this.repo.find({ email: user.email });
@@ -42,10 +43,9 @@ export class AuthController {
           password,
         );
         if (passwordMatch) {
-          const token = jwt.sign({ userId: id }, 'secret', {
+          const token = jwt.sign({ userId: id }, SECRET_KEY, {
             expiresIn: '2 days',
           });
-          console.log(token);
           response.status(200).send({
             message: 'Login successful',
             user: {
