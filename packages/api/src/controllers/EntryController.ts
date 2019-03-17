@@ -1,6 +1,6 @@
-import { getManager } from "typeorm";
-import { Entry } from "../entities/Entry";
-import { NextFunction, Response, Request } from "express";
+import { getManager } from 'typeorm';
+import { Entry } from '../entities/Entry';
+import { NextFunction, Response, Request } from 'express';
 
 export class EntryController {
   private repo = getManager().getRepository(Entry);
@@ -11,7 +11,7 @@ export class EntryController {
       const newEntry = this.repo.create(entry);
       await this.repo.save(newEntry);
       response.status(201).send({
-        message: "Successfully created the request",
+        message: 'Successfully created the request',
       });
     } catch (error) {
       throw error;
@@ -23,7 +23,7 @@ export class EntryController {
       const entry = await this.repo.findOne({ id: request.params.id });
       if (entry) {
         response.status(200).send({
-          message: "found",
+          message: 'found',
           entry,
         });
       } else {
@@ -48,7 +48,7 @@ export class EntryController {
       });
       if (entry) {
         response.status(200).send({
-          message: "found",
+          message: 'found',
           entry,
         });
       } else {
@@ -67,12 +67,12 @@ export class EntryController {
       const isEntry = await this.repo.findOne({ id: request.params.id });
       if (!isEntry) {
         response.send({
-          message: "Entry not found",
+          message: 'Entry not found',
         });
       } else {
         await this.repo.update(request.params.id, entry);
         response.send({
-          message: "Entry has been updated",
+          message: 'Entry has been updated',
         });
       }
     } catch (error) {
@@ -85,12 +85,12 @@ export class EntryController {
       const isEntry = await this.repo.findOne({ id: request.params.id });
       if (!isEntry) {
         response.send({
-          message: "Entry not found",
+          message: 'Entry not found',
         });
       } else {
         await this.repo.delete(request.params.id);
         response.send({
-          message: "Entry deleted",
+          message: 'Entry deleted',
         });
       }
     } catch (error) {

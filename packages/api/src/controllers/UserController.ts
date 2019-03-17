@@ -1,6 +1,6 @@
-import { getManager } from "typeorm";
-import { User } from "../entities/User";
-import { NextFunction, Response, Request } from "express";
+import { getManager } from 'typeorm';
+import { User } from '../entities/User';
+import { NextFunction, Response, Request } from 'express';
 
 export class UserController {
   private repo = getManager().getRepository(User);
@@ -16,7 +16,7 @@ export class UserController {
       const newUser = this.repo.create(user);
       await this.repo.save(newUser);
       response.status(201).send({
-        message: "Successfully created user",
+        message: 'Successfully created user',
       });
     } catch (error) {
       throw error;
@@ -30,7 +30,7 @@ export class UserController {
         response.send(user);
       }
       response.status(400).send({
-        message: "User not found",
+        message: 'User not found',
       });
     } catch (error) {
       throw error;
@@ -48,13 +48,14 @@ export class UserController {
       const isUser = await this.repo.findOne({ id: request.params.id });
       if (!isUser) {
         response.status(400).send({
-          message: "user not found",
+          message: 'user not found',
         });
       } else {
         await this.repo.update(request.params.id, user);
-        response.send({ message: "user updated" });
+        response.send({ message: 'user updated' });
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

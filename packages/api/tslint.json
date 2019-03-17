@@ -8,6 +8,8 @@
     "rules": {
       "arrow-parens": false,
       "array-type": [ false ],
+      "quotemark": [true, "single", "jsx-double"],
+      "whitespace": [true, "check-module"],
       "curly": false,
       "eofline": true,
       "indent": [ true, "spaces", 2 ],
