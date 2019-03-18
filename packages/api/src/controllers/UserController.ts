@@ -25,7 +25,7 @@ export class UserController {
 
   async getOne(request: Request, response: Response, next: NextFunction) {
     try {
-      const user = await this.repo.findOne({ id: request.params.id });
+      const user = await this.repo.findOne({ id: request.params.userId });
       if (user) {
         response.send(user);
       }
@@ -45,13 +45,13 @@ export class UserController {
     const { user } = request.body;
     try {
       // checks for user
-      const isUser = await this.repo.findOne({ id: request.params.id });
+      const isUser = await this.repo.findOne({ id: request.params.userId });
       if (!isUser) {
         response.status(400).send({
           message: 'user not found',
         });
       } else {
-        await this.repo.update(request.params.id, user);
+        await this.repo.update(request.params.userId, user);
         response.send({ message: 'user updated' });
       }
     } catch (error) {

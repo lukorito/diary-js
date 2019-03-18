@@ -3,32 +3,34 @@ import { Entry } from '../entities/Entry';
 import { NextFunction, Response, Request } from 'express';
 
 export class EntryController {
-  private repo = getManager().getRepository(Entry);
+  private entryRepository = getManager().getRepository(Entry);
 
   async save(request: Request, response: Response, next: NextFunction) {
     const { entry } = request.body;
+    entry.created_by = request.params.userId;
     try {
-      const newEntry = this.repo.create(entry);
-      await this.repo.save(newEntry);
+      const newEntry = this.entryRepository.create(entry);
+      await this.entryRepository.save(newEntry);
       response.status(201).send({
-        message: 'Successfully created the request',
+        message: 'Successfully created the entry',
       });
     } catch (error) {
       throw error;
     }
   }
 
-  async getOne(request: Request, response: Response, next: NextFunction) {
+  async getAll(request: Request, response: Response, next: NextFunction) {
+    const { userId } = request.params;
     try {
-      const entry = await this.repo.findOne({ id: request.params.id });
-      if (entry) {
+      const entries = await this.entryRepository.find({ created_by: userId });
+      if (entries.length > 0) {
         response.status(200).send({
-          message: 'found',
-          entry,
+          message: entries.length === 1 ? 'One entry found' : 'Entries found',
+          entries,
         });
       } else {
         response.status(400).send({
-          message: `Entry of id ${request.params.id} does not exist`,
+          message: 'No entries found',
         });
       }
     } catch (error) {
@@ -36,15 +38,12 @@ export class EntryController {
     }
   }
 
-  async getOneByUserId(
-    request: Request,
-    response: Response,
-    next: NextFunction,
-  ) {
+  async getOne(request: Request, response: Response, next: NextFunction) {
+    const { userId, id } = request.params;
     try {
-      const entry = await this.repo.findOne({
-        id: request.params.id,
-        created_by: request.params.userId,
+      const entry = await this.entryRepository.findOne({
+        id,
+        created_by: userId,
       });
       if (entry) {
         response.status(200).send({
@@ -64,13 +63,15 @@ export class EntryController {
   async update(request: Request, response: Response, next: NextFunction) {
     const { entry } = request.body;
     try {
-      const isEntry = await this.repo.findOne({ id: request.params.id });
+      const isEntry = await this.entryRepository.findOne({
+        id: request.params.id,
+      });
       if (!isEntry) {
         response.send({
           message: 'Entry not found',
         });
       } else {
-        await this.repo.update(request.params.id, entry);
+        await this.entryRepository.update(request.params.id, entry);
         response.send({
           message: 'Entry has been updated',
         });
@@ -82,13 +83,15 @@ export class EntryController {
 
   async delete(request: Request, response: Response, next: NextFunction) {
     try {
-      const isEntry = await this.repo.findOne({ id: request.params.id });
+      const isEntry = await this.entryRepository.findOne({
+        id: request.params.id,
+      });
       if (!isEntry) {
         response.send({
           message: 'Entry not found',
         });
       } else {
-        await this.repo.delete(request.params.id);
+        await this.entryRepository.delete(request.params.id);
         response.send({
           message: 'Entry deleted',
         });

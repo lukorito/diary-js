@@ -4,8 +4,8 @@ import { NextFunction, Response, Request } from 'express';
 import { createConnection } from 'typeorm';
 import * as bodyParser from 'body-parser';
 import {
-  authenticatedRoutes,
-  nonAuthentiatedRoutes,
+  passMiddleware,
+  verifyAuthentication,
 } from './middlewares/authMiddleware';
 
 const app = express();
@@ -22,7 +22,7 @@ createConnection().then(async connection => {
     Routes.forEach(route => {
       (app as any)[route.method](
         route.path,
-        route.isAuthenticated ? authenticatedRoutes : nonAuthentiatedRoutes,
+        route.isAuthenticated ? verifyAuthentication : passMiddleware,
         async (request: Request, response: Response, next: NextFunction) => {
           const controller = new route.controller() as any;
           try {
