@@ -1,9 +1,9 @@
-import { getManager } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { User } from '../entities/User';
 import { NextFunction, Response, Request } from 'express';
 
 export class UserController {
-  private repo = getManager().getRepository(User);
+  private repo = getRepository(User);
 
   async getAll(request: Request, response: Response, next: NextFunction) {
     const users = this.repo.find();
