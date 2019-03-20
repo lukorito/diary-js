@@ -6,18 +6,18 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import { getRepository } from 'typeorm';
-import { User } from '../entities/User';
+import { Entry } from '../entities/Entry';
 
 @ValidatorConstraint()
-export class IsUserAlreadyExistConstraint
+export class IsEntryAlreadyExistConstraint
   implements ValidatorConstraintInterface {
-  async validate(email: string, args: ValidationArguments) {
-    const user = await getRepository(User).findOne({ email });
-    return !user;
+  async validate(id: string, args: ValidationArguments) {
+    const entry = await getRepository(Entry).findOne({ id });
+    return !entry;
   }
 }
 
-export const IsUserAlreadyExist = (validationOptions: ValidationOptions) => (
+export const IsEntryAlreadyExist = (validationOptions: ValidationOptions) => (
   object: object,
   propertyName: string,
 ) => {
@@ -26,6 +26,6 @@ export const IsUserAlreadyExist = (validationOptions: ValidationOptions) => (
     propertyName,
     options: validationOptions,
     constraints: [],
-    validator: IsUserAlreadyExistConstraint,
+    validator: IsEntryAlreadyExistConstraint,
   });
 };

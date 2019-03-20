@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { formatResponse } from '../helpers';
 
 export const passMiddleware = (
   request: Request,
@@ -22,24 +23,18 @@ export const verifyAuthentication = (
       const decoded = jwt.verify(token, SECRET_KEY);
       const { userId }: any = decoded;
       // checks if the user is making the request
-      if (
-        request.params.userId &&
-        parseInt(request.params.userId, 10) !== userId
-      ) {
-        response.status(401).send({
-          message: 'You are not allowed to perform this action',
-        });
+      if (request.params.userId && request.params.userId !== userId) {
+        const message = 'You are not allowed to perform this action';
+        formatResponse(response, 401, message);
       } else {
         next();
       }
     } catch (error) {
-      response.status(401).send({
-        message: 'Token invalid or unavailable',
-      });
+      const message = 'Token invalid or unavailable';
+      formatResponse(response, 401, message);
     }
   } else {
-    response.status(401).send({
-      message: 'Token invalid or unavailable',
-    });
+    const message = 'Token invalid or unavailable';
+    formatResponse(response, 401, message);
   }
 };

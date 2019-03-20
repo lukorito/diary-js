@@ -7,6 +7,7 @@ import {
   passMiddleware,
   verifyAuthentication,
 } from './middlewares/authMiddleware';
+import { formatResponse } from './helpers';
 
 const app = express();
 
@@ -35,7 +36,14 @@ createConnection().then(async connection => {
               return response;
             }
           } catch (error) {
-            response.status(400).send(error);
+            if (error.name === 'QueryFailedError') {
+              const message =
+                'A problem has occurred, please contact the site administrator';
+              formatResponse(response, 500, message);
+            } else {
+              console.log(error);
+              formatResponse(response, 400, 'error', error);
+            }
           }
         },
       );

@@ -10,7 +10,7 @@ import {
   IsAlphanumeric,
 } from 'class-validator';
 import { IsPasswordValid } from '../validators/CustomPassword';
-import { isUserAlreadyExist } from '../validators/UserValidator';
+import { IsUserAlreadyExist } from '../validators/UserValidator';
 
 @Entity()
 export class User extends BaseEntity {
@@ -27,10 +27,10 @@ export class User extends BaseEntity {
   @Column()
   @IsEmail()
   @IsDefined({ message: '$property is required' })
-  @isUserAlreadyExist({ message: 'User of email $value already exists' })
+  @IsUserAlreadyExist({ message: 'User of email $value already exists' })
   email!: string;
 
-  @Column()
+  @Column({ select: false })
   @Validate(IsPasswordValid)
   @IsDefined({ message: '$property is required' })
   password!: string;

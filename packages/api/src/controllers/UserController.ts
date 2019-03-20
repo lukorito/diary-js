@@ -1,23 +1,23 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entities/User';
 import { NextFunction, Response, Request } from 'express';
+import { formatResponse } from '../helpers';
 
 export class UserController {
-  private repo = getRepository(User);
+  private userRepository = getRepository(User);
 
   async getAll(request: Request, response: Response, next: NextFunction) {
-    const users = this.repo.find();
+    const users = this.userRepository.find();
     response.send(users);
   }
 
   async save(request: Request, response: Response, next: NextFunction) {
     const { user } = request.body;
     try {
-      const newUser = this.repo.create(user);
-      await this.repo.save(newUser);
-      response.status(201).send({
-        message: 'Successfully created user',
-      });
+      const newUser = this.userRepository.create(user);
+      await this.userRepository.save(newUser);
+      const message = 'Successfully created user';
+      formatResponse(response, 201, message, user);
     } catch (error) {
       throw error;
     }
@@ -25,13 +25,16 @@ export class UserController {
 
   async getOne(request: Request, response: Response, next: NextFunction) {
     try {
-      const user = await this.repo.findOne({ id: request.params.userId });
-      if (user) {
-        response.send(user);
-      }
-      response.status(400).send({
-        message: 'User not found',
+      const user = await this.userRepository.findOne({
+        id: request.params.userId,
       });
+      if (user) {
+        const message = 'user found';
+        formatResponse(response, 200, message, user);
+      } else {
+        const message = 'User not found';
+        formatResponse(response, 400, message);
+      }
     } catch (error) {
       throw error;
     }
@@ -45,14 +48,16 @@ export class UserController {
     const { user } = request.body;
     try {
       // checks for user
-      const isUser = await this.repo.findOne({ id: request.params.userId });
+      const isUser = await this.userRepository.findOne({
+        id: request.params.userId,
+      });
       if (!isUser) {
-        response.status(400).send({
-          message: 'user not found',
-        });
+        const message = 'User not found';
+        formatResponse(response, 400, message);
       } else {
-        await this.repo.update(request.params.userId, user);
-        response.send({ message: 'user updated' });
+        await this.userRepository.update(request.params.userId, user);
+        const message = 'User has been updated';
+        formatResponse(response, 200, message);
       }
     } catch (error) {
       console.log(error);

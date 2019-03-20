@@ -5,8 +5,8 @@ import { hashPassword, checkIfPasswordsMatch } from './../utils';
 import * as jwt from 'jsonwebtoken';
 import { validate } from 'class-validator';
 import { Login } from '../validators/LoginValidator';
-import 'dotenv';
 import dotenv from 'dotenv';
+import { formatResponse } from '../helpers';
 
 dotenv.config({ path: '../../.env' });
 export class AuthController {
@@ -31,17 +31,12 @@ export class AuthController {
           error = { property, constraints };
           validationErrors.push(error);
         });
-        response.status(400).send({
-          message: 'Validation errors',
-          validationErrors,
-        });
+        formatResponse(response, 400, 'validation errors', validationErrors);
       } else {
         // hash password
         user.password = await hashPassword(user.password);
         await this.authRepository.save(user);
-        response.status(201).send({
-          message: 'user created successfully',
-        });
+        formatResponse(response, 201, 'user created successfully', user);
       }
     } catch (error) {
       throw error;
@@ -66,10 +61,7 @@ export class AuthController {
           error = { property, constraints };
           validationErrors.push(error);
         });
-        response.status(400).send({
-          message: 'Validation errors',
-          validationErrors,
-        });
+        formatResponse(response, 400, 'validation errors', validationErrors);
       } else {
         const isUser = await this.authRepository.find({ email: user.email });
         if (isUser.length > 0) {
@@ -83,22 +75,12 @@ export class AuthController {
             const token = jwt.sign({ userId: id }, SECRET_KEY, {
               expiresIn: '2 days',
             });
-            response.status(200).send({
-              message: 'Login successful',
-              user: {
-                email,
-                token,
-              },
-            });
+            formatResponse(response, 200, 'login successful', { email, token });
           } else {
-            response.status(400).send({
-              message: 'incorrect password',
-            });
+            formatResponse(response, 400, 'incorrect password');
           }
         } else {
-          response.status(400).send({
-            message: 'user not found',
-          });
+          formatResponse(response, 400, 'user not found');
         }
       }
     } catch (error) {
