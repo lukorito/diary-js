@@ -53,7 +53,6 @@ export class AuthController {
       loginValidator.password = user.password;
 
       const errors = await validate(loginValidator);
-
       if (errors.length > 0) {
         const validationErrors: any = [];
         let error = {};

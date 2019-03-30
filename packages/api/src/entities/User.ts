@@ -30,7 +30,7 @@ export class User extends BaseEntity {
   @IsUserAlreadyExist({ message: 'User of email $value already exists' })
   email!: string;
 
-  @Column({ select: false })
+  @Column()
   @Validate(IsPasswordValid)
   @IsDefined({ message: '$property is required' })
   password!: string;
