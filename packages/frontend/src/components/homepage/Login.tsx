@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../atoms/Button';
+import FormContainer from '../atoms/forms/FormContainer';
+import Input from '../atoms/Input';
 
 const Container = styled.div`
     position: absolute;
@@ -8,23 +11,16 @@ const Container = styled.div`
     transition: all 0.6s ease-in-out;
     left:0;
     width: 50%;
-    z-index: 1;
-    transform: ${props => props.state ? 'translateX(100%)' : ''};
+    z-index: 2;
+    transform: ${(props) => props.state ? 'translateX(100%)' : ''};
     `;
 
-const FormContainer = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-const Heading = styled.h1`
+const Heading = styled.h2`
     padding: 30px;
     margin-top: 2.5em;
 `;
 
-const Input = styled.input`
-    
-`;
+
 
 const Login = (props) => {
     const {state} = props;
@@ -32,7 +28,9 @@ const Login = (props) => {
         <Container state={state}>
             <FormContainer>
                 <Heading>Sign in</Heading>
-
+                <Input type="text" placeholder="Email" name="email"/>
+                <Input type="password" placeholder="Password" name="password"/>
+                <Button primary>Sign in</Button>
             </FormContainer>
         </Container>
     );

@@ -10,6 +10,7 @@ const Button = styled.button`
     margin-bottom: 0;
     border: 1px solid transparent;
     border-radius: 4px;
+    margin-top: 20px;
 `;
 
 export default Button;

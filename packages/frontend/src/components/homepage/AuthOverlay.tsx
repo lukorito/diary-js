@@ -81,12 +81,12 @@ const AuthOverlay = (props) => {
             <Overlay state={state}>
                 <OverlayPanelLeft state={state}>
                     <h2>Welcome Back</h2>
-                    <p>Please Enter your personal information to login</p>
+                    <p>Click Sign In to enter if you are a returning user</p>
                     <Button onClick={handleSlide(state)}>Sign in</Button>
                 </OverlayPanelLeft>
                 <OverlayPanelRight>
                     <h2>Hello Friend</h2>
-                    <p>Enter your personal details and start your journey with us</p>
+                    <p>Click sign up if you are a new user</p>
                     <Button onClick={handleSlide(state)}>Sign up</Button>
                 </OverlayPanelRight>
             </Overlay>
