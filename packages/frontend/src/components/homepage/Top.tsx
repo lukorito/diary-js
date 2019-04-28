@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import backgroundImage from '../assets/images/top-background-1.jpg'
-import { svgUrl } from '../assets/index'
-
+import backgroundImage from '../../assets/images/bottom.jpg';
+import { svgUrl } from '../../assets/index';
 
 const Container = styled.div`
     width: 100%;
@@ -79,6 +78,7 @@ const DescriptionContainer = styled.div`
     margin-top: 250px;
     color: white;
     padding: 5px;
+    margin-right: 100px;
 `;
 
 const Description = styled.div`
@@ -96,16 +96,16 @@ const StyledDescription = styled.h5`
 
 export const TopBar = () => {
     return (
-        <Container className='wrapper'>
+        <Container className="wrapper">
             <ImageContainer>
                 <GradientContainer>
                     <Image src={backgroundImage}/>
-                    <ContentContainer className='container'>
-                        <Row className='row'>
-                            <SvgContainer className='col-md-5 hidden-xs'>
+                    <ContentContainer className="container">
+                        <Row className="row">
+                            <SvgContainer className="col-md-5 hidden-xs">
                                 <SvgHolder src={svgUrl('typewriter.svg')}/>
                             </SvgContainer>
-                            <div className='col-md-5 hidden-xs'>
+                            <div className="col-md-5 hidden-xs">
                                 <DescriptionContainer>
                                     <Description>
                                         <h2>Welcome to My Diary</h2>
@@ -116,7 +116,7 @@ export const TopBar = () => {
                         </Row>
                     </ContentContainer>
                 </GradientContainer>
-            </ImageContainer> 
+            </ImageContainer>
         </Container>
-    )
-}
+    );
+};

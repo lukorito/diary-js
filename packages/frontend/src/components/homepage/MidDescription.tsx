@@ -11,8 +11,8 @@ const Container = styled.div`
 
 const TextContainer = styled.div`
     color: #333;
-    margin-top: 3em;
-
+    margin-top: 1em;
+    padding: 20px;
 `;
 
 const Text = styled.p`
@@ -24,12 +24,12 @@ const Text = styled.p`
 
 export const MidDescription = () => {
     return (
-        <Container>            
+        <Container>
             <TextContainer>
                 <h4>Lorem Ipsum</h4>
                 <Text>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus doloribus blanditiis aspernatur maxime tempora reiciendis quos, a nemo dicta ipsa voluptatum magni aliquid consectetur nam, rem, quod suscipit! Quae, ipsam?</Text>
             </TextContainer>
 
         </Container>
-    )
-}
+    );
+};
