@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../atoms/Modal';
-import Login from './Login';
-import Register from './Register';
+import RegisterContainer from '../../containers/RegisterContainer';
 import AuthOverlay from './AuthOverlay';
+import LoginContainer from "../../containers/LoginContainer";
 
 const Container = styled.div`
     position: fixed;
@@ -47,8 +47,8 @@ const Account = (props) => {
             <Container>
                 <ModalContainer>
                     <CloseButton className="material-icons" onClick={() => setModal(!isOpen)}>close</CloseButton>
-                    <Login state={slide}/>
-                    <Register state={slide}/>
+                    <LoginContainer state={slide}/>
+                    <RegisterContainer state={slide}/>
                     <AuthOverlay state={slide} setSlide={setSlide}/>
                 </ModalContainer>
             </Container>

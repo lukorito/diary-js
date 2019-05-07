@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import Button from '../atoms/Button';
 import FormContainer from '../atoms/forms/FormContainer';
@@ -20,20 +20,34 @@ const Heading = styled.h2`
     margin-top: 2.5em;
 `;
 
-
-
 const Login = (props) => {
-    const {state} = props;
+    const {state, success} = props;
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const user = {email, password};
+
+    useEffect(() => {
+      if(success){
+        console.log('Success can redirect')
+      }
+    }, [success]);
+    const handleSubmit = (user) => async (e) => {
+      e.preventDefault();
+      await props.loginUser(user);
+    };
     return (
         <Container state={state}>
             <FormContainer>
                 <Heading>Sign in</Heading>
-                <Input type="text" placeholder="Email" name="email"/>
-                <Input type="password" placeholder="Password" name="password"/>
-                <Button primary>Sign in</Button>
+                <Input type="text" placeholder="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <Input type="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <Button primary onClick={handleSubmit(user)}>Sign in</Button>
             </FormContainer>
         </Container>
     );
 };
+
 
 export default Login;

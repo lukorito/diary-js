@@ -1,5 +1,7 @@
 const path = require('path');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -12,8 +14,8 @@ module.exports = {
     },
     module : {
         rules: [
-            { 
-                test: /\.tsx?$/, 
+            {
+                test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
             },
             {
@@ -30,10 +32,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'public/index.html'
-        })
+        }),
+      new Dotenv({
+          path: './../../.env'
+      })
     ],
     devServer: {
         port: 3000,
         historyApiFallback: true,
-    }
-}
+    },
+    node: { fs: 'empty' },
+};

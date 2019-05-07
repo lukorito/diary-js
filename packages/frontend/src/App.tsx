@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Homepage from './components/homepage/Homepage';
 
+require('dotenv').config({path: '../.env'});
+
 const Global = createGlobalStyle`
     body, html {
         height: 100%;
