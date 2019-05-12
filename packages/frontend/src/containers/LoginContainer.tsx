@@ -4,7 +4,8 @@ import Login from "../components/homepage/Login";
 
 const mapStateToProps = state => {
   return {
-    success: state.authReducer.success
+    success: state.authReducer.success,
+    errors: state.authReducer.error.data,
   }
 };
 

@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER } from './constants';
+import { REGISTER_USER, LOGIN_USER, ENTRIES_REQUEST } from './constants';
 import { iUser } from "../types/User";
 
 export const registerUser = (user: iUser) => ({
@@ -9,4 +9,9 @@ export const registerUser = (user: iUser) => ({
 export const loginUser = (user: iUser) => ({
   type: LOGIN_USER,
   user,
+});
+
+export const fetchEntries = (user) => ({
+  type: ENTRIES_REQUEST,
+  user
 });

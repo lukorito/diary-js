@@ -7,3 +7,7 @@ export const registerUserService = (user) => {
 export const loginUserService = (user) => {
   return api.post('/auth/login', { user })
 };
+
+export const entriesRequest = (data) => {
+  return api.get(`/user/${data.user.id}/entries`)
+};

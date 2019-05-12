@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { Routes } from './routes';
 import { NextFunction, Response, Request } from 'express';
 import { createConnection } from 'typeorm';
@@ -11,6 +12,8 @@ import { formatResponse } from './helpers';
 
 const app = express();
 
+// allow cors
+app.use(cors());
 // allow use of body parser
 app.use(bodyParser.json());
 

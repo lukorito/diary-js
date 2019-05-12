@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../atoms/Button';
 import FormContainer from '../atoms/forms/FormContainer';
 import Input from '../atoms/Input';
+import { withRouter } from 'react-router'
 
 const Container = styled.div`
     position: absolute;
@@ -30,9 +31,10 @@ const Login = (props) => {
 
     useEffect(() => {
       if(success){
-        console.log('Success can redirect')
+        props.history.push('/user');
       }
     }, [success]);
+
     const handleSubmit = (user) => async (e) => {
       e.preventDefault();
       await props.loginUser(user);
@@ -50,4 +52,4 @@ const Login = (props) => {
 };
 
 
-export default Login;
+export default withRouter(Login);

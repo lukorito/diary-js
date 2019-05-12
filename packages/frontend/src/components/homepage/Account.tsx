@@ -48,7 +48,7 @@ const Account = (props) => {
                 <ModalContainer>
                     <CloseButton className="material-icons" onClick={() => setModal(!isOpen)}>close</CloseButton>
                     <LoginContainer state={slide}/>
-                    <RegisterContainer state={slide}/>
+                    <RegisterContainer state={slide} setSlide={setSlide}/>
                     <AuthOverlay state={slide} setSlide={setSlide}/>
                 </ModalContainer>
             </Container>

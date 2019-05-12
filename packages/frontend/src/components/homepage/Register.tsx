@@ -40,7 +40,7 @@ const Heading = styled.h2`
 `;
 
 const Register = (props) => {
-    const {state} = props;
+    const {state, setSlide} = props;
     const [firstname, setFirstName] = useState('');
     const [secondname, setSecondName] = useState('');
     const [email, setEmail] = useState('');
@@ -56,6 +56,9 @@ const Register = (props) => {
     const handleRegister = (user: iUser) => (e) => {
         e.preventDefault();
         props.registerUser(user);
+        //TODO
+        // on success
+        // setSlide(!state)
     };
 
     return(

@@ -74,7 +74,11 @@ export class AuthController {
             const token = jwt.sign({ userId: id }, SECRET_KEY, {
               expiresIn: '2 days',
             });
-            formatResponse(response, 200, 'login successful', { email, token });
+            formatResponse(response, 200, 'login successful', {
+              email,
+              token,
+              id,
+            });
           } else {
             formatResponse(response, 400, 'incorrect password');
           }
